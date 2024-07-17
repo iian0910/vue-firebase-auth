@@ -67,7 +67,7 @@ const createAccount = async () => {
     .then(() => {
       auth.languageCode = 'zh-TW',
       auth.ActionCodeSettings = {
-        url: `http://localhost:8080/?email=${auth.currentUser.email}`
+        url: `${process.env.NODE_ENV === 'production' ? 'https://iian0910.github.io/vue-firebase-auth/' : 'http://localhost:8080/'}?email=${auth.currentUser.email}`
       }
       // 發送驗證信到指定信箱
       sendEmailVerification(auth.currentUser, auth.ActionCodeSettings).then(() => {
