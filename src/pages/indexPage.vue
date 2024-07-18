@@ -63,11 +63,12 @@ const router = useRouter()
 
 const createAccount = async () => {
   // 建立帳號
+  // 在 auth.ActionCodeSettings.url 加上 ?email=${auth.currentUser.email} 導頁後會將使用者信箱帶上
   await createUserWithEmailAndPassword(auth, userEmail.value, userPassword.value)
     .then(() => {
       auth.languageCode = 'zh-TW',
       auth.ActionCodeSettings = {
-        url: `${process.env.NODE_ENV === 'production' ? 'https://iian0910.github.io/vue-firebase-auth/' : 'http://localhost:8080/'}?email=${auth.currentUser.email}`
+        url: `${process.env.NODE_ENV === 'production' ? 'https://iian0910.github.io/vue-firebase-auth/' : 'http://localhost:8080/'}`
       }
       // 發送驗證信到指定信箱
       sendEmailVerification(auth.currentUser, auth.ActionCodeSettings).then(() => {
