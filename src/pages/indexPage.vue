@@ -13,7 +13,12 @@
           <label for="password" class="form-label">密碼</label>
           <input v-model="userPassword" type="password" class="form-control" id="password">
         </div>
-        <div class="text-end mb-5" @click="updatePW">忘記密碼</div>
+        <div class="text-end" @click="updatePW">忘記密碼</div>
+        <div class="text-center my-3 otherLoginMethod d-flex align-items-center justify-content-center">OR</div>
+        <div class="text-center mb-5">
+          <i class="bi bi-google me-3" @click="googleLogin"></i>
+          <i class="bi bi-github" @click="githubLogin"></i>
+        </div>
         <button
           v-if="currentStatus === 'login'"
           type="button"
@@ -47,6 +52,9 @@ import {
   createUserWithEmailAndPassword, // 用email創立新帳號
   signInWithEmailAndPassword,     // 用email帳號登入
   sendEmailVerification,          // 註冊會員後，發送驗證信，點開連結才能開通
+  GoogleAuthProvider,
+  signInWithPopup,
+  GithubAuthProvider
 } from 'firebase/auth'
 import { Toast } from 'bootstrap/dist/js/bootstrap'
 import CurrentStatus from '../components/CurrentStatus.vue'
@@ -119,6 +127,42 @@ const login = async () => {
   openToast()
 }
 
+const googleLogin = async () => {
+  const providerGoogle = new GoogleAuthProvider()
+  await signInWithPopup(auth, providerGoogle)
+    .then((result) => {
+      isError.value = false
+      repMsg.value = '登入成功'
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      console.log(credential)
+    })
+    .catch(error => {
+      isError.value = true
+      repMsg.value = '登入失敗'
+      console.log(error)
+    })
+
+  openToast()
+}
+
+const githubLogin = async () => {
+  const providerGoogle = new GithubAuthProvider()
+  await signInWithPopup(auth, providerGoogle)
+    .then((result) => {
+      isError.value = false
+      repMsg.value = '登入成功'
+      const credential = GithubAuthProvider.credentialFromResult(result)
+      console.log(credential)
+    })
+    .catch(error => {
+      isError.value = true
+      repMsg.value = '登入失敗'
+      console.log(error)
+    })
+
+  openToast()
+}
+
 const updatePW = () => {
   router.push({
     name: 'resetPassword',
@@ -147,5 +191,38 @@ const setStatus = (status) => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.bi{
+  cursor: pointer;
+  &::before {
+    font-size: 25px;
+    color: rgb(38, 90, 150);
+    &:hover {
+      color: rgb(66, 123, 187);
+    }
+  }
+  &:hover{
+    &::before {
+      color: rgb(66, 123, 187);
+    }
+  }
+}
+.otherLoginMethod{
+  color: rgb(38, 90, 150);
+  font-weight: bold;
+  &::before,
+  &::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    background: rgb(38, 90, 150);
+  }
+  &::before {
+    margin-right: 10px;
+  }
+  &::after {
+    margin-left: 10px;
+  }
 }
 </style>
