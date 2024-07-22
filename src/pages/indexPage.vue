@@ -14,28 +14,37 @@
           <label for="password" class="form-label">密碼</label>
           <input v-model="userPassword" type="password" class="form-control" id="password">
         </div>
-        <div class="text-end" @click="updatePW">忘記密碼</div>
+        <a
+          href="#"
+          class="d-block text-decoration-none text-end"
+          @click.prevent="updatePW"
+          v-if="currentStatus === 'login'"
+        >
+          忘記密碼?
+        </a>
         <div class="text-center my-3 otherLoginMethod d-flex align-items-center justify-content-center">OR</div>
-        <div class="text-center mb-5">
+        <div class="text-center mb-4">
           <i class="bi bi-google me-3" @click="googleLogin"></i>
           <i class="bi bi-github" @click="githubLogin"></i>
         </div>
-        <button
-          v-if="currentStatus === 'login'"
-          type="button"
-          class="btn btn-primary"
-          @click="login"
-        >
-          登入
-        </button>
-        <button
-          v-else
-          type="button"
-          class="btn btn-primary"
-          @click="createAccount"
-        >
-          註冊
-        </button>
+        <div class="d-grid gap-2">
+          <button
+            v-if="currentStatus === 'login'"
+            type="button"
+            class="btn btn-primary d-block"
+            @click="login"
+          >
+            登入
+          </button>
+          <button
+            v-else
+            type="button"
+            class="btn btn-primary"
+            @click="createAccount"
+          >
+            註冊
+          </button>
+        </div>
       </form>
     </div>
   </div>

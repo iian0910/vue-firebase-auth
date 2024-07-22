@@ -26,4 +26,5 @@ Node.js `v20.10.0`
 ```
 Firebase 10.12.3
 Vue.js 3.2.13
+Lottie 3.3.0
 ```
