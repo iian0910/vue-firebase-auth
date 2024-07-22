@@ -1,4 +1,5 @@
 <template>
+  <LoadingPlugins :is-loading="isLoading"/>
   <div class="card user_info">
     <CurrentStatus
       @sendStatus="setStatus"
@@ -58,6 +59,7 @@ import {
 } from 'firebase/auth'
 import { Toast } from 'bootstrap/dist/js/bootstrap'
 import CurrentStatus from '../components/CurrentStatus.vue'
+import LoadingPlugins from '../components/LoadingPlugins.vue'
 import MsgToast from '../components/MsgToast.vue'
 import { useRouter } from 'vue-router'
 
@@ -69,7 +71,10 @@ const currentStatus = ref('login')
 
 const router = useRouter()
 
+const isLoading = ref(false)
+
 const createAccount = async () => {
+  isLoading.value = true
   // 建立帳號
   // 在 auth.ActionCodeSettings.url 加上 ?email=${auth.currentUser.email} 導頁後會將使用者信箱帶上
   await createUserWithEmailAndPassword(auth, userEmail.value, userPassword.value)
@@ -98,10 +103,12 @@ const createAccount = async () => {
       }
     })
   
+  isLoading.value = false
   openToast()
 }
 
 const login = async () => {
+  isLoading.value = true
   await signInWithEmailAndPassword(auth, userEmail.value, userPassword.value)
     .then(() => {
       userEmail.value = ''
@@ -123,7 +130,8 @@ const login = async () => {
           break;
       }
     })
-  
+    
+  isLoading.value = false
   openToast()
 }
 
