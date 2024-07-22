@@ -1,4 +1,5 @@
 <template>
+  <LoadingPlugins :is-loading="isLoading"/>
   <div class="card user_info">
     <div class="card-body px-0 py-0">
       <form>
@@ -18,6 +19,7 @@
   </div>
   <!-- Toast -->
   <MsgToast
+    id="myToast"
     :isError="isError"
     :repMsg="repMsg"
   />
@@ -32,14 +34,17 @@ import {
 } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 import MsgToast from '../components/MsgToast.vue'
+import LoadingPlugins from '../components/LoadingPlugins.vue'
 
 const userEmail = ref('')
 const isError = ref(false)
 const repMsg = ref('')
+const isLoading = ref(false)
 
 const router = useRouter()
 
 const resetPSW = async () => {
+  isLoading.value = true
   await sendPasswordResetEmail(auth, userEmail.value)
     .then(() => {
       userEmail.value = ''
@@ -51,19 +56,23 @@ const resetPSW = async () => {
       repMsg.value = '發生錯誤，請重新整理頁面'
     })
     
-    openToast()
+  isLoading.value = false
+  openToast()
 }
 
-const openToast = async () => {
+const openToast = () => {
   const toastLive = document.getElementById('liveToast')
   const toast = new Toast(toastLive)
-  await toast.show()
+  toast.show()
 
-  setTimeout(() => {
-    router.push({
-      name: 'Index',
+  if(!isError.value) {
+    let myToastEl = document.getElementById('myToast')
+    myToastEl.addEventListener('hidden.bs.toast', function () {
+      router.push({
+        name: 'Index',
+      })
     })
-  }, 2000);
+  }
 }
 </script>
 
