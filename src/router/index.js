@@ -5,14 +5,38 @@ import {
 
 const routes = [
   {
-    path: '/',
-    name: 'Index',
-    component: () => import('../pages/indexPage.vue')
+    path: '/login',
+    name: 'Login',
+    component: () => import('../pages/loginPage.vue')
   },
   {
     path: '/resetPassword',
     name: 'resetPassword',
     component: () => import('../pages/resetPassword.vue')
+  },
+  {
+    path: '/admin',
+    name: 'Dashboard',
+    component: () => import('../pages/backEnd/dashboardPage.vue'),
+    children: [
+      {
+        path: 'productsList',
+        name: 'ProductsList',
+        component: () => import('../pages/backEnd/indexPage.vue')
+      }
+    ]
+  },
+  {
+    path: '/',
+    name: 'frontEnd',
+    component: () => import('../pages/frontEnd/frontEnd.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Index',
+        component: () => import('../pages/frontEnd/indexPage.vue')
+      }
+    ]
   }
 ]
 

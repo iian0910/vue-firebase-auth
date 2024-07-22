@@ -124,6 +124,10 @@ const login = async () => {
       userPassword.value = ''
       isError.value = false
       repMsg.value = '登入成功'
+      router.push({
+        path: '/admin/productsList',
+      })
+
     })
     .catch(error => {
       isError.value = true
@@ -141,7 +145,6 @@ const login = async () => {
     })
     
   isLoading.value = false
-  openToast()
 }
 
 const googleLogin = async () => {
@@ -182,7 +185,7 @@ const githubLogin = async () => {
 
 const updatePW = () => {
   router.push({
-    name: 'resetPassword',
+    path: '/resetPassword',
   })
 }
 
