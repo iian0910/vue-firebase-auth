@@ -29,7 +29,7 @@ const props = defineProps({
 .lottie_mask {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background-color: rgba(255, 255, 255, 0.541);
   z-index: 5;
 }
