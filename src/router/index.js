@@ -17,12 +17,12 @@ const routes = [
   {
     path: '/admin',
     name: 'Dashboard',
-    component: () => import('../pages/backEnd/dashboardPage.vue'),
+    component: () => import('../pages/backEnd/backEnd.vue'),
     children: [
       {
         path: 'productsList',
         name: 'ProductsList',
-        component: () => import('../pages/backEnd/indexPage.vue')
+        component: () => import('../pages/backEnd/productList.vue')
       }
     ]
   },

@@ -1,18 +1,15 @@
 <template>
-  BackEnd Index
-  <button
-    type="button"
-    class="btn btn-primary d-block"
-    @click="logout"
-  >
-    登出
-  </button>
+  <NavbarComp
+    @logout="logout"
+  />
+  
 </template>
 
 <script setup>
 import { auth } from '@/firebase'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import NavbarComp from '../../components/backEnd/NavbarComp.vue'
 
 const router = useRouter()
 
