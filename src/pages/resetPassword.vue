@@ -32,7 +32,6 @@ import { auth } from '@/firebase'
 import {
   sendPasswordResetEmail          // 修改密碼，並寄信通知
 } from 'firebase/auth'
-import { useRouter } from 'vue-router'
 import MsgToast from '../components/MsgToast.vue'
 import LoadingPlugins from '../components/LoadingPlugins.vue'
 
@@ -40,8 +39,6 @@ const userEmail = ref('')
 const isError = ref(false)
 const repMsg = ref('')
 const isLoading = ref(false)
-
-const router = useRouter()
 
 const resetPSW = async () => {
   isLoading.value = true
@@ -64,15 +61,6 @@ const openToast = () => {
   const toastLive = document.getElementById('liveToast')
   const toast = new Toast(toastLive)
   toast.show()
-
-  if(!isError.value) {
-    let myToastEl = document.getElementById('myToast')
-    myToastEl.addEventListener('hidden.bs.toast', function () {
-      router.push({
-        name: 'Index',
-      })
-    })
-  }
 }
 </script>
 

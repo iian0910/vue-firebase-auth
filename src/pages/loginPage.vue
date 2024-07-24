@@ -124,10 +124,6 @@ const login = async () => {
       userPassword.value = ''
       isError.value = false
       repMsg.value = '登入成功'
-      router.push({
-        path: '/admin/productsList',
-      })
-
     })
     .catch(error => {
       isError.value = true
